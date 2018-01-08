@@ -54,11 +54,12 @@ public class DragAndDrop : MonoBehaviour
     {
         GameObject target = null;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray.origin, ray.direction * 10, out hit))
+        if (Physics.Raycast(ray.origin, ray.direction * 10, out hit)
+            && hit.collider.gameObject.GetComponent<DragAndDrop>() != null)
         {
             target = hit.collider.gameObject;
         }
-
+     
         return target;
     }
 }

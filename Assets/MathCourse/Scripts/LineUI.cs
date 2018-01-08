@@ -52,7 +52,7 @@ public class LineUI : MonoBehaviour {
     protected void WriteText2()
     {
         StringBuilder sb = new StringBuilder();
-        sb.Append(gameObject.name+"\n");
+        sb.Append("<u>"+gameObject.name+"</u>\n");
         MathUtil.RoundVector2(line2.Center, sb);
         sb.Append(":רוקמ");
         sb.Append("\n");
