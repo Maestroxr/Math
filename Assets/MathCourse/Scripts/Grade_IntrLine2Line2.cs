@@ -28,12 +28,17 @@ namespace Dest.Math.Tests
         public TMP_Dropdown dropDownMenu;
         public GameObject pointInput, directionInput;
 
+        
+
+
         private enum DropdownChoices { POINT, LINE, EMPTY };
         private HashSet<string> inputDefaults = new HashSet<string> { "X", "Y", "Z" };
         public void Start()
         {
             DropdownUpdate();
             AnswerPoint.gameObject.SetActive(false);
+            
+            
         }
 
 
@@ -206,12 +211,15 @@ namespace Dest.Math.Tests
             IntersectionTypes t = new IntersectionTypes();
             bool doesAnswerIntersectLine0 = Intersection.TestLine2Line2(ref line0, ref l, out t);
             answerLine.transform.position = center;
+            Vector3 newDirection = Vector3.RotateTowards(answerLine.transform.forward, direction,1000,0);
+            answerLine.transform.rotation = Quaternion.LookRotation(newDirection);
+            //answerLine.transform.forward = direction;
             answerLine.gameObject.SetActive(true);
             answerLine.vectorLine.SetWidth(4);
+            //answerLine.UpdateLine2();
             if (doesAnswerIntersectLine0 && t == IntersectionTypes.Line)
             {
                 answerLine.SetLineColor(Color.green);
-
                 answerLine.UpdateLine2();
                 success();
             }

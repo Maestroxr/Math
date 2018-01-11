@@ -13,26 +13,34 @@ public class LineUI : MonoBehaviour {
     public Transform LineObject;
     public Line2 line2;
     public Line3 line3;
-    public MeshRenderer mr;
-    public TextMeshProUGUI textMesh;
-    public VectorLine vectorLine;
-    List<Vector3> linePoints = new List<Vector3>();
     
+    public TextMeshProUGUI textMesh;
+    [HideInInspector]
+    public MeshRenderer mr;
+    [HideInInspector] public VectorLine vectorLine;
+    List<Vector3> linePoints = new List<Vector3>() {new Vector3(0,0,0), new Vector3(-10,0,0) };
+
+    public Texture lineTexture;
+    public Material lineMaterial;
+    public Color lineColor;
+
     // Use this for initialization
     void Start () {
         mr = GetComponent<MeshRenderer>();
-	}
+        //SetLineColor(lineColor);
+        
+    }
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+        Debug.Log(gameObject.name + lineColor.ToString());
+    }
 
     public Line2 UpdateLine2()
     {
         line2 = MathUtil.CreateLine2(LineObject);
         if (textMesh) WriteText2();
-        DrawLine2();
+        //DrawLine2();
         return line2;
     }
 
@@ -82,10 +90,17 @@ public class LineUI : MonoBehaviour {
         vectorLine.points3.Add(line3.Eval(15));
         vectorLine.Draw3D();
     }
+   
 
     public void OnEnable()
     {
-        vectorLine = new VectorLine("Result0", linePoints, 2f);
+        vectorLine = new VectorLine(gameObject.name, linePoints, lineTexture, 10f);
+        vectorLine.color = new Color(lineColor.r, lineColor.g, lineColor.b);
+        Debug.Log(gameObject.name + lineColor.ToString());
+        VectorManager.ObjectSetup (gameObject, vectorLine, Visibility.Dynamic, Brightness.None, false);
+
+        // Make VectorManager lines be drawn in the scene instead of as an overlay
+        VectorManager.useDraw3D = true;
     }
     public void OnDisable()
     {
