@@ -11,7 +11,7 @@ namespace Dest.Math.Tests
 
     public class Grade_IntrLine2Line2 : Test_Base
     {
-        public LineUI lineUI0, lineUI1, answerLine;
+        public LineUI lineUI0, lineUI1, answerLine, IntersectionLine;
         public Transform IntersectionPoint, AnswerPoint;
 
 
@@ -60,13 +60,25 @@ namespace Dest.Math.Tests
 
         void DrawResult()
         {
-            IntersectionPoint.gameObject.SetActive(false);
+            
             if (find)
             {
                 if (info.IntersectionType == IntersectionTypes.Point)
                 {
                     IntersectionPoint.gameObject.SetActive(true);
                     IntersectionPoint.transform.position = info.Point;
+                    IntersectionLine.gameObject.SetActive(false);
+                }
+                else if (info.IntersectionType == IntersectionTypes.Line)
+                {
+                    IntersectionLine.gameObject.SetActive(true);
+                    IntersectionLine.transform.position = (line0.Center + line1.Center) / 2;
+                    IntersectionPoint.gameObject.SetActive(false);
+                }
+                else
+                {
+                    IntersectionPoint.gameObject.SetActive(false);
+                    IntersectionLine.gameObject.SetActive(false);
                 }
             }
         }

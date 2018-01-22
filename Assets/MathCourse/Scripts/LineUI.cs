@@ -28,17 +28,22 @@ public class LineUI : MonoBehaviour {
     void Start () {
         mr = GetComponent<MeshRenderer>();
         //SetLineColor(lineColor);
-        
+        UpdateLine2();
     }
 	
 	// Update is called once per frame
 	void Update () {
-        Debug.Log(gameObject.name + lineColor.ToString());
+        Debug.Log(gameObject.name + transform.position);
     }
 
     public Line2 UpdateLine2()
     {
-        line2 = MathUtil.CreateLine2(LineObject);
+        if (transform.hasChanged)
+        {
+            line2 = MathUtil.CreateLine2(LineObject);
+            transform.hasChanged = false;
+        }
+        
         if (textMesh) WriteText2();
         //DrawLine2();
         return line2;
@@ -96,7 +101,7 @@ public class LineUI : MonoBehaviour {
     {
         vectorLine = new VectorLine(gameObject.name, linePoints, lineTexture, 10f);
         vectorLine.color = new Color(lineColor.r, lineColor.g, lineColor.b);
-        Debug.Log(gameObject.name + lineColor.ToString());
+        Debug.Log("enable:" + gameObject.name + lineColor.ToString());
         VectorManager.ObjectSetup (gameObject, vectorLine, Visibility.Dynamic, Brightness.None, false);
 
         // Make VectorManager lines be drawn in the scene instead of as an overlay
