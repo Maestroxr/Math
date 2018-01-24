@@ -75,11 +75,12 @@ namespace Dest.Math.Tests
                     IntersectionLine.transform.position = (line0.Center + line1.Center) / 2;
                     IntersectionPoint.gameObject.SetActive(false);
                 }
-                else
-                {
-                    IntersectionPoint.gameObject.SetActive(false);
-                    IntersectionLine.gameObject.SetActive(false);
-                }
+               
+            }
+            else
+            {
+                IntersectionPoint.gameObject.SetActive(false);
+                IntersectionLine.gameObject.SetActive(false);
             }
         }
 

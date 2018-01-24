@@ -22,10 +22,13 @@ public class CallJS : MonoBehaviour
     [DllImport("__Internal")]
     private static extern void BindWebGLTexture(int texture);
 
+    [DllImport("__Internal")]
+    private static extern void GetParameters();
+
     void Start()
     {
         Hello();
-
+        /*
         HelloString("This is a string.");
 
         float[] myArray = new float[10];
@@ -38,5 +41,8 @@ public class CallJS : MonoBehaviour
 
         var texture = new Texture2D(0, 0, TextureFormat.ARGB32, false);
         BindWebGLTexture(texture.GetNativeTextureID());
+        */
+
+        GetParameters();
     }
 }
