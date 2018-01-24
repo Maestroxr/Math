@@ -11,7 +11,7 @@ namespace Dest.Math.Tests
 
     public class Grade_IntrLine2Line2 : Test_Base
     {
-        public LineUI lineUI0, lineUI1, answerLine;
+        public LineUI lineUI0, lineUI1, answerLine, IntersectionLine;
         public Transform IntersectionPoint, AnswerPoint;
 
 
@@ -28,12 +28,17 @@ namespace Dest.Math.Tests
         public TMP_Dropdown dropDownMenu;
         public GameObject pointInput, directionInput;
 
+        
+
+
         private enum DropdownChoices { POINT, LINE, EMPTY };
         private HashSet<string> inputDefaults = new HashSet<string> { "X", "Y", "Z" };
         public void Start()
         {
             DropdownUpdate();
             AnswerPoint.gameObject.SetActive(false);
+            
+            
         }
 
 
@@ -55,13 +60,25 @@ namespace Dest.Math.Tests
 
         void DrawResult()
         {
-            IntersectionPoint.gameObject.SetActive(false);
+            
             if (find)
             {
                 if (info.IntersectionType == IntersectionTypes.Point)
                 {
                     IntersectionPoint.gameObject.SetActive(true);
                     IntersectionPoint.transform.position = info.Point;
+                    IntersectionLine.gameObject.SetActive(false);
+                }
+                else if (info.IntersectionType == IntersectionTypes.Line)
+                {
+                    IntersectionLine.gameObject.SetActive(true);
+                    IntersectionLine.transform.position = (line0.Center + line1.Center) / 2;
+                    IntersectionPoint.gameObject.SetActive(false);
+                }
+                else
+                {
+                    IntersectionPoint.gameObject.SetActive(false);
+                    IntersectionLine.gameObject.SetActive(false);
                 }
             }
         }
@@ -206,12 +223,15 @@ namespace Dest.Math.Tests
             IntersectionTypes t = new IntersectionTypes();
             bool doesAnswerIntersectLine0 = Intersection.TestLine2Line2(ref line0, ref l, out t);
             answerLine.transform.position = center;
+            Vector3 newDirection = Vector3.RotateTowards(answerLine.transform.forward, direction,1000,0);
+            answerLine.transform.rotation = Quaternion.LookRotation(newDirection);
+            //answerLine.transform.forward = direction;
             answerLine.gameObject.SetActive(true);
             answerLine.vectorLine.SetWidth(4);
+            //answerLine.UpdateLine2();
             if (doesAnswerIntersectLine0 && t == IntersectionTypes.Line)
             {
                 answerLine.SetLineColor(Color.green);
-
                 answerLine.UpdateLine2();
                 success();
             }

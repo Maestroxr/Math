@@ -10,14 +10,15 @@ public class MoveRotateSwitch : MonoBehaviour {
     public DragAndDrop drag;
     public MouseRotate rotate;
 
-    public Text switchButton;
+    public Image switchButtonImage;
+    string dragImage = "", rotateImage = "";
 	// Use this for initialization
     public void SwitchToRotate()
     {
         isRotateMode = true;
         isMoveMode = false;
         RefreshSwitch();
-        if (switchButton) switchButton.text = "בבוס";
+        //if (switchButtonImage) switchButtonImage.text = "בבוס";
     }
 
     public void SwitchToMove()
@@ -25,7 +26,7 @@ public class MoveRotateSwitch : MonoBehaviour {
         isRotateMode = false;
         isMoveMode = true;
         RefreshSwitch();
-        if (switchButton) switchButton.text = "זזה";
+        //if (switchButton) switchButton.text = "זזה";
     }
 
     public void ChangeMode()
