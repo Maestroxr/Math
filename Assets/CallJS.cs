@@ -1,5 +1,14 @@
 ﻿using UnityEngine;
 using System.Runtime.InteropServices;
+using System.Collections.Generic;
+using System;
+
+[Serializable]
+public class JsonWebgl
+{
+    public string inputId;
+    public string optional;
+}
 
 public class CallJS : MonoBehaviour
 {
@@ -22,12 +31,17 @@ public class CallJS : MonoBehaviour
     [DllImport("__Internal")]
     private static extern void BindWebGLTexture(int texture);
 
-    [DllImport("__Internal")]
-    private static extern void GetParameters();
+    
 
+    [DllImport("__Internal")]
+    private static extern void SubmitResult(string jsonData);
+
+
+    JsonWebgl parameters;
+    static CallJS calljs;
     void Start()
     {
-        Hello();
+        //Hello();
         /*
         HelloString("This is a string.");
 
@@ -42,7 +56,19 @@ public class CallJS : MonoBehaviour
         var texture = new Texture2D(0, 0, TextureFormat.ARGB32, false);
         BindWebGLTexture(texture.GetNativeTextureID());
         */
+        
 
-        GetParameters();
+        //string parameters = "{\"inputId\" : \"webgl_problem1\", \"optional\" : \"True\" }";
+        //parameters = JsonUtility.FromJson<JsonWebgl>(jsonParameters);
+       
+        //Debug.Log("inputId:" + parameters.inputId +" optional:" + parameters.optional);
+        
+        calljs = this;
+    }
+
+    public static void Submit(string jsonData)
+    {
+        
+        SubmitResult(jsonData);
     }
 }

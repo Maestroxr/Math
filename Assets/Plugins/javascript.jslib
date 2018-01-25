@@ -28,21 +28,18 @@ mergeInto(LibraryManager.library, {
   BindWebGLTexture: function (texture) {
     GLctx.bindTexture(GLctx.TEXTURE_2D, GL.textures[texture]);
   },
-  
-  GetParameters: function () {
-	  alert('kaka1');
-	  var raw = window.location.search.substring(1).split("&");
-	  var result = [];
-	  for (var i in raw) {
-		  var pair = raw[i].split("=");
-		  result[pair[0]] = pair[1]];
-	  }
-	  alert('kaka2');
-	  alert(result);
-	  window.parent.document.getElementById(result[inputId]).value("fuck me this works."); 
-	  return result;
-  }
-  
-  
 
+  
+  SubmitResult: function (jsonData) {
+	  var raw = window.location.search.substring(1).split("&");
+	  var getParams = [];
+	  var pair = [];
+	  for (var i in raw) {
+		  pair = raw[i].split("=");
+		  getParams[pair[0]] = pair[1];
+	  }
+	  
+	  window.parent.document.getElementById(getParams["inputId"]).value = jsonData;
+	  window.parent.document.getElementById("task").submit();
+  }
 });

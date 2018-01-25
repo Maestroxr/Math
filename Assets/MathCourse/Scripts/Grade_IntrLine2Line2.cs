@@ -117,12 +117,12 @@ namespace Dest.Math.Tests
                     DrawPoint(info.Point);
                     string s = "X:" + MathUtil.FormatNumber(info.Point.x) +
                         " Y:" + MathUtil.FormatNumber(info.Point.y);
-                    LogInfo(s);
-                    LogInfo(info.Point);
+                    //LogInfo(s);
+                    //LogInfo(info.Point);
                 }
             }
 
-            LogInfo(intersectionType);
+            //LogInfo(intersectionType);
             if (test != find) LogError("test != find");
             if (intersectionType != info.IntersectionType) LogError("intersectionType != info.IntersectionType");
         }
@@ -184,7 +184,7 @@ namespace Dest.Math.Tests
             }
 
             Vector2 answer = GetVector2Input(inputX, inputY);
-
+            this.answer = answer.ToString();
             AnswerPoint.gameObject.SetActive(true);
             AnswerPoint.gameObject.transform.position = answer;
             Vector2 correct = MathUtil.RoundVector(info.Point);
@@ -219,7 +219,7 @@ namespace Dest.Math.Tests
 
             Vector2 center = GetVector2Input(inputX, inputY),
                 direction = GetVector2Input(inputX1, inputY1);
-
+            answer = center.ToString() + " " + direction.ToString();
             Line2 l = new Line2(center, direction);
             IntersectionTypes t = new IntersectionTypes();
             bool doesAnswerIntersectLine0 = Intersection.TestLine2Line2(ref line0, ref l, out t);
@@ -255,12 +255,14 @@ namespace Dest.Math.Tests
                 return;
             }
             else success();
+            answer = "no intersection";
         }
-
+        string answer;
         public void Submit()
         {
             feedback.gameObject.SetActive(true);
             Invoke("turnFeedbackOff", 7);
+            
             //(turnFeedbackOff);
             if (info.IntersectionType == IntersectionTypes.Point)
             {
@@ -274,6 +276,8 @@ namespace Dest.Math.Tests
             {
                 GradeEmptyIntersection();
             }
+            string jsonData = "{\"answer\" : \""+answer+"\", \"problem\" : \""+line0.Center + " " +line0.Direction+"\" }";
+            CallJS.Submit("{}");
         }
 
         public void DropdownUpdate()
