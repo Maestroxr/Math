@@ -31,6 +31,7 @@ mergeInto(LibraryManager.library, {
 
   
   SubmitResult: function (jsonData) {
+	  
 	  var raw = window.location.search.substring(1).split("&");
 	  var getParams = [];
 	  var pair = [];
@@ -39,7 +40,16 @@ mergeInto(LibraryManager.library, {
 		  getParams[pair[0]] = pair[1];
 	  }
 	  
-	  window.parent.document.getElementById(getParams["inputId"]).value = jsonData;
-	  window.parent.document.getElementById("task").submit();
+	  //window.parent.document.getElementById(getParams["inputId"]).value = jsonData;
+	  //window.parent.document.getElementById("task").submit();
+	  //window.parent.submitTask(false);
+	  alert("submitting from unity");
+	  window.parent.postMessage({
+		'func': 'parentFunc',
+		'message': { "problem-data" : Pointer_stringify(jsonData), "problem-input" : getParams["inputId"]}
+		}, "*");
   }
+  
+  
+  
 });

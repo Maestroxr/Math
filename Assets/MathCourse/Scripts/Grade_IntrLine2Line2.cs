@@ -73,6 +73,7 @@ namespace Dest.Math.Tests
                 {
                     IntersectionLine.gameObject.SetActive(true);
                     IntersectionLine.transform.position = (line0.Center + line1.Center) / 2;
+                    IntersectionLine.transform.rotation = lineUI0.transform.rotation;
                     IntersectionPoint.gameObject.SetActive(false);
                 }
                
@@ -277,7 +278,7 @@ namespace Dest.Math.Tests
                 GradeEmptyIntersection();
             }
             string jsonData = "{\"answer\" : \""+answer+"\", \"problem\" : \""+line0.Center + " " +line0.Direction+"\" }";
-            CallJS.Submit("{}");
+            CallJS.Submit("{\"answer\":\"something\"}");
         }
 
         public void DropdownUpdate()
